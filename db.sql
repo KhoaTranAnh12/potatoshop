@@ -125,8 +125,8 @@ create table cart_item(
     FOREIGN key (pType) REFERENCES producttype(name) ON DELETE CASCADE ON UPDATE CASCADE,
     quantity float
 );
-INSERT INTO `news` (`id`, `url`, `image`, `secondaryimage`, `uploaderid`) VALUES ('1', 'khoaitaygiamgia', '../images/khoai_tay_chien_news.png', '../images/khoai_tay_chien_news_2.jpg', NULL)
-INSERT INTO `news` (`id`, `url`, `image`, `secondaryimage`, `uploaderid`) VALUES ('1', 'khoailanggiamgia', '../images/khoai_lang_chien_news.png', '../images/khoai_lang_chien_news_2.jpg', NULL)
+INSERT INTO `news` (`id`, `url`, `image`, `secondaryimage`, `uploaderid`) VALUES ('1', 'khoaitaygiamgia', '../images/khoai_tay_chien_news.png', '../images/khoai_tay_chien_news_2.jpg', NULL);
+INSERT INTO `news` (`id`, `url`, `image`, `secondaryimage`, `uploaderid`) VALUES ('1', 'khoailanggiamgia', '../images/khoai_lang_chien_news.png', '../images/khoai_lang_chien_news_2.jpg', NULL);
 DELIMITER //
 CREATE TRIGGER `ass` AFTER INSERT ON `buyproduct` FOR EACH ROW begin
 declare bill int DEFAULT 0; 
