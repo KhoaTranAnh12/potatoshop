@@ -49,14 +49,13 @@ create table product(
     image3 mediumtext,
     foreign key (type) REFERENCES producttype(name) ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (sellerid) REFERENCES seller(id) ON DELETE CASCADE ON UPDATE CASCADE
-    );
+);
 create table news(
     id int primary key AUTO_INCREMENT,
     url varchar(100),
     image mediumtext,
     secondaryimage mediumtext,
     uploaderid int,
-    foreign key (uploaderid) REFERENCES seller(id) ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (uploaderid) REFERENCES admin(id) ON DELETE CASCADE ON UPDATE CASCADE  
 );
 create table articles(
@@ -114,7 +113,7 @@ create table notifications(
     foreign key (receiverid) REFERENCES customer(id) ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (receiverid) REFERENCES admin(id) ON DELETE CASCADE ON UPDATE CASCADE,
     content varchar(500) 
-);
+); 
 create table cart_item(
     id int PRIMARY key auto_increment,
     uid int,
@@ -125,8 +124,6 @@ create table cart_item(
     FOREIGN key (pType) REFERENCES producttype(name) ON DELETE CASCADE ON UPDATE CASCADE,
     quantity float
 );
-INSERT INTO `news` (`id`, `url`, `image`, `secondaryimage`, `uploaderid`) VALUES ('1', 'khoaitaygiamgia', '../images/khoai_tay_chien_news.png', '../images/khoai_tay_chien_news_2.jpg', NULL);
-INSERT INTO `news` (`id`, `url`, `image`, `secondaryimage`, `uploaderid`) VALUES ('2', 'khoailanggiamgia', '../images/khoai_lang_chien_news.png', '../images/khoai_lang_chien_news_2.jpg', NULL);
 DELIMITER //
 CREATE TRIGGER `ass` AFTER INSERT ON `buyproduct` FOR EACH ROW begin
 declare bill int DEFAULT 0; 
@@ -171,3 +168,10 @@ if new.sellerFlag
 THEN insert into seller VALUES (new.id,0,0);
 end if; 
 end//
+DELIMITER ;
+
+
+insert into customer values (1,'admin','admin','Tran','Khoa','0777111234','a@abc.com',0,0,0,1000000,null);
+insert into admin values (1);
+insert into news VALUES (1,"khoailanggiamgia","../Images/khoai_lang_chien_news.jpg","../Images/khoai_lang_chien_news_2.jpg",1);
+insert into news VALUES (2,"khoaitaygiamgia","../Images/khoai_tay_chien_news.png","../Images/khoai_tay_chien_news_2.jpg",1);
