@@ -1,0 +1,254 @@
+<div class="row container-fluid">
+  <div class="col-lg-4">
+    <div class="card" style="width:100%">
+      <img class="card-img-top" src="<%-data.customerData[0].avatar%>" alt="Card image" style="width:100%">
+      <h6 class="card-title text-center">username</h6>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <h6>Thông tin cá nhân:</h6>
+    <form method="post" action="<%-baseURL%>/profChange">
+      <input type="hidden" class="form-control" id="updateID" name="ID" value=<%-data.customerData[0].id%>>
+      <input type="hidden" class="form-control" id="updateAvatar" name="avatar" value="<%-data.customerData[0].avatar%>">
+      <div class="form-group">
+        <label for="username">Tên đăng nhập:</label>
+        <input type="text" class="form-control" placeholder="Enter first name" id="username" name="username" value="<%-data.customerData[0].username%>">
+      </div>
+      <div class="form-group">
+        <label for="fName">Họ:</label>
+        <input type="text" class="form-control" placeholder="Enter first name" id="fName" name="fName" value="<%-data.customerData[0].password%>">
+      </div>
+      <div class="form-group">
+        <label for="lName">Tên:</label>
+        <input type="text" class="form-control" placeholder="Enter last name" id="lName" name="lName" value="<%-data.customerData[0].fName + " " + data.customerData[0].lName%>">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" class="form-control" placeholder="Enter email" id="email" name="email" value="<%-data.customerData[0].email%>">
+      </div>
+      <div class="form-group">
+        <label for="phoneNum">SĐT:</label>
+        <input type="text" class="form-control" placeholder="Enter phone num" id="phoneNum" name="phoneNum" value="<%-data.customerData[0].phoneNum%>">
+      </div>
+      <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" value="<%-data.customerData[0].password%>">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmModal">Sửa</button>
+
+        <div class="modal" id="confirmModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+
+              <!-- Modal Header -->
+
+              <div class="modal-header">
+                <h4 class="modal-title">Sửa thông tin thành viên</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">
+                Bạn có chắc chắn muốn sửa thông tin thành viên này?
+              </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-danger mr-0">Sửa</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+    <a href="../controller/?perm=abc&action=info&search=sell">
+      <h6>Mặt hàng bán gần đây:</h6>
+    </a>
+    <div style="height: 200px; overflow-y: auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">Tên mặt hàng</th>
+            <th scope="col">Số lượng/Khối lượng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%for (let i=0;i<data.innerData.productData.length;i++){%>
+          <tr>
+            <td scope="col"><%-i+1%></td>
+            <td scope="col"><%-data.innerData.productData[i].id%></td>
+            <td scope="col"><%-data.innerData.productData[i].name%></td>
+            <td scope="col"><%-data.innerData.productData[i].quantity%></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+    <a href="../controller/?perm=abc&action=info&search=buy">
+      <h6>Mặt hàng mua gần đây:</h6>
+    </a>
+    <div style="height: 200px; overflow-y: auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">ID mặt hàng</th>
+            <th scope="col">Loại</th>
+            <th scope="col">Số lượng/Khối lượng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%for (let i=0;i<data.innerData.buyData.length;i++){%>
+          <tr>
+            <td scope="col"><%-i+1%></td>
+            <td scope="col"><%-data.innerData.buyData[i].id%></td>
+            <td scope="col"><%-data.innerData.buyData[i].name%></td>
+            <td scope="col"><%-data.innerData.buyData[i].quantity%></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+    <a href="../controller/?perm=abc&action=info&search=comment">
+      <h6>Các bình luận gần đây:</h6>
+    </a>
+    <div style="height: 200px; overflow-y: auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nội dung</th>
+            <th scope="col">Loại trang bình luận</th>
+            <th scope="col">ID Mặt hàng/Bài viết/Tin tức bình luận</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%for (let i=0;i<data.innerData.commentData.length;i++){%>
+          <tr>
+            <td scope="col"><%-i+1%></td>
+            <td scope="col"><%-data.innerData.commentData[i].content%></td>
+            <td scope="col"><%-data.innerData.commentData[i].type%></td>
+            <td scope="col"><%-data.innerData.commentData[i].content%></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+    <a href="../controller/?perm=abc&action=info&search=article">
+      <h6>Các bài viết gần đây:</h6>
+    </a>
+    <div style="height: 200px; overflow-y: auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Tiêu đề</th>
+            <th scope="col">Nội dung</th>
+            <th scope="col">Hình ảnh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%for (let i=0;i<data.innerData.articleData.length;i++){%>
+          <tr>
+            <td scope="col"><%-i+1%></td>
+            <td scope="col"><%-data.innerData.productData[i].id%></td>
+            <td scope="col"><%-data.innerData.productData[i].title%></td>
+            <td scope="col"><%-data.innerData.productData[i].content%></td>
+            <td scope="col"><img src="<%-data.innerData.productData[i].image%>" alt=""></td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+    <% if(session.user.permission=="client") {%>
+    <h6>Giỏ hàng:</h6>
+    <div style="height: 200px; overflow-y: auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">ID mặt hàng</th>
+            <th scope="col">Loại</th>
+            <th scope="col">Số lượng/Khối lượng</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <script>
+            function changedeleteinput(id) {
+              document.getElementById("delID").value = id;
+            }
+
+            function changemanageinput(id) {
+              document.getElementById("updateproductID").value = id;
+            }
+          </script>
+          <div class="modal" id="deleteModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Xoá mặt hàng trong giỏ</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  Bạn chắc chắn xoá mặt hàng trong giỏ chứ?
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <form method="POST" action="../controller/cartedit.php?action=delete">
+                    <input type="hidden" id="delID" name="ID">
+                    <button type="submit" class="btn btn-danger">Xoá</button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="modal" id="updateModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Sửa số lượng mặt hàng</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <form method="POST" action="../controller/cartedit.php?action=update">
+                    <div class="form-group">
+                      <input type="hidden" name="ID" id="updateproductID">
+                      <label for="quantity">Số lượng:</label>
+                      <input name="quantity" type="number" min="0.1" step="0.1"></input>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Sửa</button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </tbody>
+      </table>
+    </div>
+    <%}%>
+    <%if (session.user.permission=="seller"){%>
+      <a href="<%baseURL%>/seller/addproduct" class="btn btn-info" role="button">Thêm sản phẩm</a>
+    <%}%>
+  </div>
+</div>

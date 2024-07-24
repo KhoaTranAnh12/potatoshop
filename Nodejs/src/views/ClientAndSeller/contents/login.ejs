@@ -1,0 +1,75 @@
+<!-- <?php
+
+if (array_key_exists('err',$_GET))
+{
+    echo "
+    <script>alert('Thông tin đăng nhập bị sai!');</script>
+    ";
+}
+?> -->
+<script>
+  let unameError = false;
+  let pError = false;
+</script>
+<div class="bg-light container-fluid">
+  <div class="row p-3">
+    <div class="col-lg-8">
+      <img src="./images/khoai.jpg" alt="yone" width="100%">
+    </div>
+    <div class="col-lg-4">
+      <% if(session.user.permission == "seller") {%>
+      <form action="<%-baseURL%>/seller/checkLogin" method="post" class="bg-light m-3 p-1">
+      <% }else{ %>
+      <form action="<%-baseURL%>/checkLogin" method="post" class="bg-light m-3 p-1">
+      <%}%>
+        <div class="mb-3 mt-3 mx-3">
+          <label for="username" class="form-label">Username:</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" onchange="usernameCheck()">
+          <p id="usernameError" class="text-danger"></p>
+          <script>
+            function usernameCheck() {
+              let uname = document.getElementById("username").value;
+              if (uname.length < 8 && uname != "admin" && uname != "admin2") {
+                document.getElementById("usernameError").innerHTML = "Username Must be at least 8 Characters!";
+                unameError = 1;
+              } else {
+                document.getElementById("usernameError").innerHTML = "";
+                unameError = 0;
+              }
+              lockButton();
+            }
+          </script>
+        </div>
+        <div class="mb-3 mx-3">
+          <label for="pwd" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" onchange="passwordCheck()">
+          <p id="passwordError" class="text-danger"></p>
+          <script>
+            function passwordCheck() {
+              let pswd = document.getElementById("pwd").value;
+              console.log(pswd);
+              if (pswd.length < 8 && pswd != "admin" && pswd != "admin2") {
+                document.getElementById("passwordError").innerHTML = "Password Must be at least 8 Characters!";
+                pError = 1;
+              } else {
+                document.getElementById("passwordError").innerHTML = "";
+                pError = 0;
+              }
+              lockButton();
+            }
+          </script>
+        </div>
+        <div class="mx-3">
+          <a href="<%-baseURL%>/signup" class="btn btn-info" role="button">Đăng ký</a>
+          <button type="submit" id="submitLog" class="btn btn-dark">Submit</button>
+          <script>
+            function lockButton() {
+              if (unameError || pError) document.getElementById("submitLog").disabled = true;
+              else document.getElementById("submitLog").disabled = false;
+            }
+          </script>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

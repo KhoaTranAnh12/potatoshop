@@ -1,0 +1,182 @@
+<link href="./js/cropperjs/cropper.css" rel="stylesheet">
+<script src="./js/cropperjs/cropper.js"></script>
+<script>
+  let unameErr = 0;
+  let passErr = 0;
+  let confErr = 0;
+  let emailErr = 0;
+</script>
+<div class="bg-light container-fluid">
+  <div class="row p-3">
+    <div class="col-lg-8">
+      <img src="../Images/khoai.jpg" alt="yone" width="100%">
+    </div>
+    <div class="col-lg-4">
+      <form method="post" action="<%baseURL%>/checkSignUp">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstName">First name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastName">Last name</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Username" onchange="usernameCheck()">
+          <p id="usernameError" class="text-danger"></p>
+          <script>
+            function usernameCheck() {
+              let uname = document.getElementById("username").value;
+              if (uname.length < 8) {
+                document.getElementById("usernameError").innerHTML = "Username Must be at least 8 Characters!";
+                unameErr = 1;
+              } else {
+                document.getElementById("usernameError").innerHTML = "";
+                unameErr = 0;
+              }
+              lockButton();
+            }
+          </script>
+        </div>
+        <div class="mb-3">
+          <label for="username">Email</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">@</span>
+            </div>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Email" onchange="emailCheck()">
+          </div>
+          <p id="emailError" class="text-danger"></p>
+          <script>
+            function validateEmail(email) {
+              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              return emailRegex.test(email);
+            }
+
+            function emailCheck() {
+              let em = document.getElementById("email").value;
+              console.log(em);
+              console.log(validateEmail(em));
+              let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+              if (!validateEmail(em)) {
+                document.getElementById("emailError").innerHTML = "Wrong Email Form!";
+                emailErr = 1;
+              } else {
+                document.getElementById("emailError").innerHTML = "";
+                emailErr = 0;
+              }
+              lockButton();
+            }
+          </script>
+        </div>
+
+        <div class="mb-3">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="pwd" name="password" onchange="passwordCheck()">
+          <p id="passwordError" class="text-danger"></p>
+          <script>
+            function passwordCheck() {
+              let pswd = document.getElementById("pwd").value;
+              console.log(pswd);
+              if (pswd.length < 8) {
+                document.getElementById("passwordError").innerHTML = "Password Must be at least 8 Characters!";
+                passErr = 1;
+              } else {
+                document.getElementById("passwordError").innerHTML = "";
+                passErr = 0;
+              }
+              confPasswordCheck();
+              lockButton();
+            }
+          </script>
+        </div>
+
+        <div class="mb-3">
+          <label for="password">Confirm Password</label>
+          <input type="password" class="form-control" id="conf-password" name="conf-password" onchange="confPasswordCheck()">
+          <p id="confpasswordError" class="text-danger"></p>
+          <script>
+            function confPasswordCheck() {
+              let conf = document.getElementById("conf-password").value;
+              console.log(conf);
+              if (conf != document.getElementById("pwd").value) {
+                document.getElementById("confpasswordError").innerHTML = "Password Must be at least 8 Characters!";
+                confErr = 1;
+              } else {
+                document.getElementById("confpasswordError").innerHTML = "";
+                confErr = 0;
+              }
+              lockButton();
+            }
+          </script>
+        </div>
+
+        <div class="mb-3">
+          <label for="pNum" class="form-label">Số điện thoại:</label>
+          <input type="text" class="form-control" id="pNum" placeholder="Enter phone number" name="phoneNum">
+        </div>
+
+        <div class="mb-3">
+          <p>Đăng ký với tư cách:</p>
+          <label for="buyer" class="form-label">Người mua</label>
+          <input type="checkbox" id="buyer" name="buyer">
+          <label for="seller" class="form-label">Người bán</label>
+          <input type="checkbox" id="seller" name="seller">
+          <span id="phoneNumError" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+          <label for="choose-file" class="form-label">Ảnh đại diện:<span class="text-muted">(Optional)</span></label>
+          <input class="form-control" type="file" id="choose-file" name="choose-file" accept="image/*" data-toggle="modal" data-target="#cropWindow" />
+          <img src="" id="preview" style="height: 200px; width: 200px;" hidden>
+          <input type="hidden" id="imgData" name="imgData">
+        </div>
+
+
+
+
+
+        <div class="modal" hidden id="cropWindow">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <div class="row justify-content-center m-0">
+                  <div id="img-preview" class="img-container col-8">
+                    <img id="image" src="https://m.media-amazon.com/images/I/91SpCtx31AL._AC_UF1000,1000_QL80_.jpg" class="w-100">
+                  </div>
+                </div>
+                <div class="row justify-content-center mt-3">
+                  <button type="button" id="btn-crop" class="btn btn-primary" style="width: 100px;">Cắt</button>
+                </div>
+                <div class="row cropped-container mt-3 justify-content-center" style="height: 200px;">
+                  <img src="" id="output" style="height: 200px; width: 200px;" hidden>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" id="btn-ok" class="btn btn-primary" style="width: 100px;">Submit</button>
+              </div>
+              <script src="<%-baseURL%>/js/crop.js"></script>
+
+            </div>
+          </div>
+        </div>
+        <hr class="mb-4">
+        <button id="submitreg" class="btn btn-primary btn-lg btn-block" type="submit">Đăng ký</button>
+        <script>
+          function lockButton() {
+            if (unameErr || passErr || confErr || emailErr) document.getElementById("submitreg").disabled = true;
+            else document.getElementById("submitreg").disabled = false;
+          }
+        </script>
+      </form>
+    </div>
+  </div>
+</div>

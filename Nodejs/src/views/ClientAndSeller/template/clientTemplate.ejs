@@ -1,0 +1,146 @@
+<!-- <?php
+// $_SESSION['id']=1;
+// $_SESSION['permission']='SELL';
+?> -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>potato.shop</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-body">
+  <div class="fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div class="container-fluid">
+        <div class="navbar-brand">
+          <% if (session.user.permission=="seller") {%>
+          <h1><a style="text-decoration: none; color: white" href="<%baseURL%>/seller">potato.shop Người bán</a></h1>
+          <%}else{%>
+          <h1><a style="text-decoration: none; color: white" href="<%baseURL%>/">potato.shop</a></h1>
+          <%}%>
+
+        </div>
+        <ul class="navbar-nav ml-auto">
+          <% if (session.user.userID==null) {%>
+          <li class="nav-item"><a class="nav-link" href="<%baseURL%>/signUp">Đăng ký</a></li>
+          <li class="nav-item"><a class="nav-link" href="<%baseURL%>/login">Đăng nhập</a></li>
+          <%if (session.user.permission=="client") { %>
+          <li class="nav-item"><a class="nav-link" href="<%baseURL%>/seller/login">Chế độ người bán</a></li>
+          <%} else {%>
+          <li class="nav-item"><a class="nav-link" href="<%baseURL%>/login">Chế độ người mua</a></li>
+          <%}%>
+          <% } else if (session.user.permission=="client") { %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%baseURL%>/info">
+              <img src="<%- data.customerData[0].avatar%>" alt="avatar" style="width: 2rem;">
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="<%baseURL%>/seller/login">Chế độ người bán</a></li>
+          <li class="nav-item"></li><a class="nav-link" href="<%baseURL%>/login">Đăng xuất</a></li>
+          <% } else {%>
+          <li class="nav-item">
+            <a class="nav-link" href="<%baseURL%>/seller/info">
+              <img src="<%- data.customerData[0].avatar%>" alt="avatar" style="width: 2rem;">
+            </a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="<%baseURL%>/login">Chế độ người mua</a></li>
+          <li class="nav-item"></li><a class="nav-link" href="<%baseURL%>/seller/login">Đăng xuất</a></li>
+          <%}%>
+          </ul>
+        </div>
+    </nav>
+    <% if (session.user.permission=="client") { %>
+          <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container-fluid">
+              <div class="header__references">
+                <ul class="navbar-nav">
+                  <li class="nav-item"><a class="nav-link" href="<%-baseURL%>/about">Về Potato.shop</a></li>
+                </ul>
+              </div>
+              <form method="get" id="searchForm" action="<%-baseURL%>/search/" class="header__search d-flex ml-auto">
+                <input type="hidden" id="baseURL" value="<%-baseURL%>/search/">
+                <input name="input" id="sInput" class="form-control mr-2" type="text" placeholder="Search" onchange="searchInput()">
+                <% } else {%>
+                <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+                  <div class="container-fluid">
+                    <div class="header__references">
+                      <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="<%-baseURL%>/seller/about">Về Potato.shop</a></li>
+                      </ul>
+                    </div>
+                    <form method="get" id="searchForm" action="<%-baseURL%>/seller/search/" class="header__search d-flex ml-auto">
+                      <input type="hidden" id="baseURL" value="<%-baseURL%>/seller/search/">
+                      <input name="input" id="sInput" class="form-control mr-2" type="text" placeholder="Search" onchange="searchInput()">
+                      <%}%>
+          <script>
+            function searchInput() {
+              document.getElementById("searchForm").action = document.getElementById("baseURL").value + document.getElementById("sInput").value;
+            }
+          </script>
+          <button class="btn-primary bg-success">Search</button>
+        </form>
+      </div>
+    </nav>
+  </div>
+  <div>
+
+  </div>
+  <div style="height: 9rem; width: 100%;"></div>
+  <div class="row container-fluid">
+    <% if(content!="login"&&content!="signup") { %>
+                      <div class="row p-3 container-fluid">
+                        <h2>Danh mục</h2>
+                      </div>
+                      <nav class="navbar navbar-expand-sm navbar-dark bg-light container-fluid">
+                        <div class="container-fluid">
+                          <div class="header__references container-fluid">
+                            <ul class="navbar-nav justify-content-around overflow-auto row p-0">
+                              <% for (let i = 0; i<data.productTypeData.length; i++) {%>
+                              <li class="nav-item px-2 col-lg-2 col-md-3 col-4">
+                                <div class="card">
+                                  <a href="<%-baseURL%>/category/<%-data.productTypeData[i].name%>"><img class="card-img-top" src="<%-data.productTypeData[i].image%>" alt="Card image" style="width:100%; height: 150px;"></a>
+                                  <h6 class="card-title text-center"><%-data.productTypeData[i].name%></h6>
+                                </div>
+                              </li>
+                              <%}%>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+  <% } %>
+                              <%- include('../contents/'+content+'.ejs');  %>
+
+                              <div class="row container-fluid">
+                                <div class="col-lg-6">
+                                  <h5>Loại khoai nào cũng có, có thể mua hết ở potato.shop</h5>
+                                  <p>Potato.shop, là một nơi bán khoai lớn nhất Việt Nam, từ mọi loại khoai thuộc bản địa Việt Nam đến loại khoai từ nước ngoài.
+                                    Từ loại khoai sống cho đến khoai chế biến, tất cả đều có trong potato.shop.
+                                  </p>
+                                </div>
+                                <div class="col-lg-6">
+                                  <h5>Các đơn vị nhập khoai</h5>
+                                  <ul>
+                                    <li>Khoai Chần</li>
+                                    <li>Chen Aang Khoai</li>
+                                    <li>Khoai Lang Vờ lốc</li>
+                                    <li>Potato.storage</li>
+                                    <li>Và các đơn vị khác</li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <footer id="footer" class="container-fluid">
+                                <div class="mt-4 p-5 bg-dark text-white rounded">
+                                  <h1>Danh sách thành viên</h1>
+                                  <p>1: Trần Anh Khoa</p>
+                                </div>
+                              </footer>
+</body>
+
+</html>

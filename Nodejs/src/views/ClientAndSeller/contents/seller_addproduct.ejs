@@ -1,0 +1,146 @@
+<link href="../js/cropperjs/cropper.css" rel="stylesheet">
+<script src="../js/cropperjs/cropper.js"></script>
+<div class="container-fluid">
+  <h1 class="text-center">Thêm sản phẩm vào giỏ hàng</h1>
+</div>
+<form method="post" action="<%baseURL%>/seller/newProductReq" class="container">
+  <div class="mb-3">
+    <label for="productName">Tên sản phẩm</label>
+    <input type="text" class="form-control" name="productName" placeholder="Tên sản phẩm" required="">
+  </div>
+
+  <div class="mb-3">
+    <label for="quantity">Số lượng</label>
+    <input type="number" class="form-control" name="quantity" min="1" max="1000" step="0.1" placeholder="Số lượng">
+  </div>
+
+  <div class="form-group">
+    <label for="type">Loại:</label>
+    <select class="form-control" id="type" name="type">
+      <% for (let i = 0; i<data.productTypeData.length; i++) {%>
+      <option><%-data.productTypeData[i].name%></option>
+      <%}%>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="price">Giá</label>
+    <input type="number" class="form-control" name="price" placeholder="Giá">
+  </div>
+
+  <div class="mb-3">
+    <label for="description">Mô tả</label>
+    <textarea class="form-control" name="description" rows="4" placeholder="Mô tả sản phẩm" value=""></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="choose-file" class="form-label">Ảnh đại diện:<span class="text-muted">(Optional)</span></label>
+    <input class="form-control" type="file" id="choose-file" name="choose-file" accept="image/*" data-toggle="modal" data-target="#cropWindow" />
+    <img src="" id="preview" style="height: 200px; width: 200px;" hidden>
+    <input type="hidden" id="imgdata" name="imgdata">
+  </div>
+  <div class="modal" hidden id="cropWindow">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-center m-0">
+            <div id="img-preview" class="img-container col-8">
+              <img id="image" src="https://m.media-amazon.com/images/I/91SpCtx31AL._AC_UF1000,1000_QL80_.jpg" class="w-100">
+            </div>
+          </div>
+          <div class="row justify-content-center mt-3">
+            <button type="button" id="btn-crop" class="btn btn-primary" style="width: 100px;">Cắt</button>
+          </div>
+          <div class="row cropped-container mt-3 justify-content-center" style="height: 200px;">
+            <img src="" id="output" style="height: 200px; width: 200px;" hidden>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" id="btn-ok" class="btn btn-primary" style="width: 100px;">Submit</button>
+        </div>
+        <script src="<%baseURL%>/js/crop4.js"></script>
+
+  </div>
+  </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="choose-file2" class="form-label">Ảnh đại diện:<span class="text-muted">(Optional)</span></label>
+    <input class="form-control" type="file" id="choose-file2" name="choose-file2" accept="image/*" data-toggle="modal" data-target="#cropWindow2" />
+    <img src="" id="preview2" style="height: 200px; width: 200px;" hidden>
+    <input type="hidden" id="imgdata2" name="imgdata2">
+  </div>
+  <div class="modal" hidden id="cropWindow2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-center m-0">
+            <div id="img-preview2" class="img-container col-8">
+              <img id="image2" src="https://m.media-amazon.com/images/I/91SpCtx31AL._AC_UF1000,1000_QL80_.jpg" class="w-100">
+            </div>
+          </div>
+          <div class="row justify-content-center mt-3">
+            <button type="button" id="btn-crop2" class="btn btn-primary" style="width: 100px;">Cắt</button>
+          </div>
+          <div class="row cropped-container mt-3 justify-content-center" style="height: 200px;">
+            <img src="" id="output2" style="height: 200px; width: 200px;" hidden>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" id="btn-ok2" class="btn btn-primary" style="width: 100px;">Submit</button>
+        </div>
+        <script src="<%baseURL%>/js/crop2.js"></script>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="choose-file" class="form-label">Ảnh đại diện:<span class="text-muted">(Optional)</span></label>
+    <input class="form-control" type="file" id="choose-file3" name="choose-file3" accept="image/*" data-toggle="modal" data-target="#cropWindow3" />
+    <img src="" id="preview3" style="height: 200px; width: 200px;" hidden>
+    <input type="hidden" id="imgdata3" name="imgdata3">
+  </div>
+  <div class="modal" hidden id="cropWindow3">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-center m-0">
+            <div id="img-preview3" class="img-container col-8">
+              <img hg id="image3" src="https://m.media-amazon.com/images/I/91SpCtx31AL._AC_UF1000,1000_QL80_.jpg" class="w-100">
+            </div>
+          </div>
+          <div class="row justify-content-center mt-3">
+            <button type="button" id="btn-crop3" class="btn btn-primary" style="width: 100px;">Cắt</button>
+          </div>
+          <div class="row cropped-container mt-3 justify-content-center" style="height: 200px;">
+            <img src="" id="output3" style="height: 200px; width: 200px;" hidden>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" id="btn-ok3" class="btn btn-primary" style="width: 100px;">Submit</button>
+        </div>
+        <script src="<%baseURL%>/js/crop3.js"></script>
+
+      </div>
+    </div>
+  </div>
+
+  <hr class="mb-4">
+  <button class="btn btn-primary btn-lg btn-block" type="submit">Đăng ký</button>
+</form>

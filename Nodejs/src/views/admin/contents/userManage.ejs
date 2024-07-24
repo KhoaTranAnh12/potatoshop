@@ -1,0 +1,327 @@
+        <div class="row">
+          <form class="header__search d-flex ml-auto" method="get" action="http://localhost/mvc/controller/">
+            <input type="hidden" name="perm" value="admin"><input type="hidden" name="action" value="client">
+            <input class="form-control mr-2" type="text" placeholder="Search" name="input">
+            <button class="btn-primary bg-success">Search</button>
+          </form>
+        </div>
+        <h1>Quản lý <%-manage%></h1>
+        <table class="table" class="mx-auto col-8">
+          <% switch (manage) {
+          case "product": %>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">ID sản phẩm</th>
+              <th scope="col">ID người bán</th>
+              <th scope="col">Tên</th>
+              <th scope="col">Loại</th>
+              <th scope="col">Số lượng</th>
+              <th scope="col">Hình minh hoạ</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%for (let i = 0; i< data.productData.length ; i++){%>
+            <tr class="info-'.ceil($count/12).'">
+              <th scope="row"><%-i+1%></th>
+              <td><%-data.productData[i].id%></td>
+              <td><%-data.productData[i].sellerid%></td>
+              <td><%-data.productData[i].name%></td>
+              <td><%-data.productData[i].type%></td>
+              <td><%-data.productData[i].quantity%></td>
+              <td><img style="max-height: 200px;" src="<%-data.productData[i].image1%>" alt=""></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal<%-data.productData[i].id%>">Xoá</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changeModal<%-data.productData[i].id%>">Sửa</a></td>
+            </tr>
+            <div class="modal" id="deleteModal<%-data.productData[i].id%>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h4 class="modal-title">Xoá sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                    Bạn có chắc chắn muốn xoá thành viên này?
+                  </div>
+
+                  <div class="modal-footer">
+                    <form method="POST" action="<%baseURL%>/admin/productDelete">
+                      <input type="hidden" id="delID" name="delID" value="<%-data.productData[i].id%>">
+                      <button type="submit" class="btn btn-danger float-right">Xoá</button>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal" id="changeModal<%-data.productData[i].id%>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h4 class="modal-title">Sửa sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                    <h6>Thông tin sản phẩm</h6>
+                    <form method="POST" action="<%baseURL%>/admin/productUpdate" class="">
+                      <input type="hidden" id="updateName" name="updateID" value="<%-data.productData[i].id%>">
+                      <div class="form-group">
+                        <label for="email">Tên sản phẩm:</label>
+                        <input type="text" class="form-control" id="updateName" name="updateName" value="<%-data.productData[i].name%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Loại:</label>
+                        <input type="text" class="form-control" id="updateType" name="updateType" value="<%-data.productData[i].type%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Số lượng:</label>
+                        <input type="text" class="form-control" id="updateQuantity" name="updateQuantity" value="<%-data.productData[i].quantity%>">
+                      </div>
+                      <button type="submit" class="btn btn-danger float-right">Sửa</button>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <%}%>
+          </tbody>
+          <%break;
+          case "customer": %>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Tên đăng nhập</th>
+                <th scope="col">Tên đầy đủ</th>
+                <th scope="col">SĐT</th>
+                <th scope="col">Email</th>
+                <th scope="col">Số tiền</th>
+                <th scope="col">Hình minh hoạ</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+          <tbody>
+            <%for (let i = 0; i < data.customerDataManage.length ; i++){%>
+            <tr class="info-'.ceil($count/12).'">
+              <th scope="row"><%-i+1%></th>
+              <td><%-data.customerDataManage[i].id%></td>
+              <td><%-data.customerDataManage[i].username%></td>
+              <td><%-data.customerDataManage[i].fName%> <%-data.customerDataManage[i].lName%></td>
+              <td><%-data.customerDataManage[i].phoneNum%></td>
+              <td><%-data.customerDataManage[i].email%></td>
+              <td><%-data.customerDataManage[i].money%></td>
+              <td><img style="max-height: 100px;" src="<%-data.customerDataManage[i].avatar%>" alt=""></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal<%-data.customerDataManage[i].id%>">Xoá</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changeModal<%-data.customerDataManage[i].id%>">Sửa</a></td>
+            </tr>
+            <div class="modal" id="deleteModal<%-data.customerDataManage[i].id%>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h4 class="modal-title">Xoá thành viên</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                    Bạn có chắc chắn muốn xoá thành viên này?
+                  </div>
+
+                  <div class="modal-footer">
+                    <form method="POST" action="<%baseURL%>/post">
+                      <input type="hidden" id="delID" name="delID" value="<%-data.customerDataManage[i].id%>">
+                      <button type="submit" class="btn btn-danger float-right">Xoá</button>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal" id="changeModal<%-data.customerDataManage[i].id%>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h4 class="modal-title">Sửa thông tin thành viên</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                    <h6>Thông tin thành viên</h6>
+                    <form method="POST" action="<%baseURL%>/post" class="">
+                      <div class="form-group">
+                        <label for="changeUsername">Tên đăng nhập:</label>
+                        <input type="text" class="form-control" id="changeUsername" name="changeUsername" value="<%-data.customerDataManage[i].username%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="changeFirstName">Họ:</label>
+                        <input type="text" class="form-control" id="changeFirstName" name="changeFirstName" value="<%-data.customerDataManage[i].fName%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="changeLastName">Tên:</label>
+                        <input type="text" class="form-control" id="changeLastName" name="changeLastName" value="<%-data.customerDataManage[i].lName%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="changePassword">Mật khẩu:</label>
+                        <input type="password" class="form-control" id="changePassword" name="changePassword" value="<%-data.customerDataManage[i].password%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="changePhoneNum">SĐT:</label>
+                        <input type="text" class="form-control" id="changePhoneNum" name="changePhoneNum" value="<%-data.customerDataManage[i].phoneNum%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="changeEmail">Email:</label>
+                        <input type="text" class="form-control" id="changeEmail" name="changeEmail" value="<%-data.customerDataManage[i].email%>">
+                      </div>
+                      <div class="form-group">
+                        <label for="changeSellerFlag">Bán:</label>
+                        <%if (data.customerDataManage[i].sellerFlag){%>
+                        <input type="text" class="form-control" id="changeSellerFlag" name="changeSellerFlag" value="1">
+                        <%} else {%>
+                        <input type="text" class="form-control" id="changeSellerFlag" name="changeSellerFlag" value="0">
+                        <%}%>
+                      </div>
+                      <div class="form-group">
+                        <label for="changeBuyerFlag">Mua:</label>
+                        <%if (data.customerDataManage[i].sellerFlag){%>
+                        <input type="text" class="form-control" id="changeBuyerFlag" name="changeBuyerFlag" value="1">
+                        <%} else {%>
+                        <input type="text" class="form-control" id="changeBuyerFlag" name="changeBuyerFlag" value="0">
+                        <%}%>
+                      </div>
+                      <div class="form-group">
+                        <label for="changeMoney">Tiền:</label>
+                        <input type="text" class="form-control" id="changeMoney" name="changeMoney" value="<%-data.customerDataManage[i].money%>">
+                      </div>
+                      <button type="submit" class="btn btn-danger float-right">Sửa</button>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <%}%>
+          </tbody>
+          <%break;
+          case "comment": %>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">ID Người bình luận</th>
+                <th scope="col">Loại bình luận</th>
+                <th scope="col">ID của phần bình luận đó</th>
+                <th scope="col">Nội dung</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+          <tbody>
+            <%for (let i = 0; i< data.commentData.length ; i++){%>
+            <tr class="info-'.ceil($count/12).'">
+              <th scope="row"><%-i+1%></th>
+              <td><%-data.commentData[i].id%></td>
+              <td><%-data.commentData[i].uid%></td>
+              <td><%-data.commentData[i].type%></td>
+              <% switch(data.commentData[i].type){
+                case "article":%>
+              <td><%-data.commentData[i].articleid%></td>
+              <%break;
+                case "news": %>
+              <td><%-data.commentData[i].newsid%></td>
+              <%break;
+                case "product": %>
+              <td><%-data.commentData[i].productid%></td>
+              <%break;
+                case "comment": %>
+              <td><%-data.commentData[i].commentid%></td>
+              <% break; 
+              default: 
+              break;}%>
+              <td><%-data.commentData[i].content%></td>
+              <td><img style="max-height: 100px;" src="<%-data.commentData[i].avatar%>" alt=""></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal<%-data.commentData[i].id%>">Xoá</button></td>
+              <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changeModal<%-data.commentData[i].id%>">Sửa</a></td>
+            </tr>
+            <div class="modal" id="deleteModal<%-data.commentData[i].id%>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h4 class="modal-title">Xoá sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                    Bạn có chắc chắn muốn xoá thành viên này?
+                  </div>
+
+                  <div class="modal-footer">
+                    <form method="POST" action="<%baseURL%>/post">
+                      <input type="hidden" id="delID" name="delID" value="<%-data.commentData[i].id%>">
+                      <button type="submit" class="btn btn-danger float-right">Xoá</button>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="modal" id="changeModal<%-data.commentData[i].id%>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h4 class="modal-title">Sửa sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                    <h6>Thông tin sản phẩm</h6>
+                    <form method="POST" action="<%baseURL%>/post" class="">
+                      <div class="form-group">
+                        <label for="changeContent">Nội dung:</label>
+                        <textarea rows="4" class="form-control" id="changeContent" name="changeContent"><%-data.commentData[i].content%></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-danger float-right">Sửa</button>
+                    </form>
+                  </div>
+
+                  <div class="modal-footer">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <%}%>
+          </tbody>
+            <% break; 
+          default: 
+          break;}%>
+        </table>
+        <div class="row justify-content-center container-fluid">
+          <ul class="pagination">
+            <%if(pNum!=null) { %>
+            <li class="page-item"><a class="page-link" href="<%baseURL%>/admin/<%-manage%>Manage/<%-pNum-1%>">Previous</a></li>
+            <li class="page-item active"><a class="page-link" href="#"><%-pNum%></a></li>
+            <li class="page-item"><a class="page-link" href="<%baseURL%>/admin/<%-manage%>Manage/<%-pNum-(-1)%>">Next</a></li>
+            <%}else{%>
+            <li class="page-item"><a class="page-link" href="<%baseURL%>/admin/<%-manage%>Manage/0">Previous</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="<%baseURL%>/admin/<%-manage%>Manage/2">Next</a></li>
+            <%}%>
+          </ul>
+        </div>

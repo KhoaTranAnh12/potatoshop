@@ -1,0 +1,63 @@
+<div class="container my-2">
+  <div class="row">
+    <h1>Kết quả tim kiếm:</h1>
+  </div>
+  <div class="row">
+    <h3>Người dùng</h3>
+  </div>
+  <% if(data.userData.length > 0){%>
+  <% for (let i = 0; i < data.userData.length; i++) {%>
+  <div class="row mt-3 border border-primary rounded">
+    <div class="col-1 card">
+      <img class="d-block w-100" src="<%- data.userData[i].avatar %>" alt="abc">
+    </div>
+    <div class="col-11">
+      <h6><%- data.userData[i].username %></h6>
+      <ul>
+        <li><%- data.userData[i].fName %> <%- data.userData[i].lName %></li>
+        <li><%- data.userData[i].phoneNum %></li>
+        <% if(data.userData.sellerFlag > 0){%>
+        <li>Vai trò: Người bán</li>
+        <% } else { %>
+        <li>Vai trò: Người mua</li>
+        <%}%>
+      </ul>
+    </div>
+  </div>
+  <%}%>
+        <%} else {%>
+        <p>Không có kết quả</p>
+        <%}%>
+  <div class="row">
+      <h3>Sản phẩm</h3>
+  </div>
+  <div class="row">
+    <% if(data.productData.length > 0){%>
+        <% for (let i = 0; i < data.productData.length; i++) {%>
+        <div class="card col-lg-4 col-md-6 py-2 h-100 item">
+          <a href="<%baseURL%>/product/<%- data.productData[i].id %>"><img src="<%- data.productData[i].image1 %>" alt="Polo picture" class="card-img-top"></a>
+          <p class="text-center"><%- data.productData[i].name %></p>
+          <p class="text-center">Giá: <%- data.productData[i].price %> VNĐ</p>
+        </div>
+        <!-- <?php
+                if (count($products)>0)
+                foreach($products as $row3)
+                {
+                    extract($row3);
+                    echo'
+                    <div class="card col-lg-4 col-md-6 py-2 h-100 item">
+                        <a href="../controller/?perm='.$_GET['perm'].'&action=product&productid='.$id.'"><img src="'.$image1.'" alt="Polo picture" class="card-img-top"></a>
+                        <p class="text-center">Price: '.$price.' VNĐ</p>
+                    </div>
+                    ';
+                }
+                else{
+                    echo'<p>Không có kết quả</p>';
+                }
+                ?> -->
+        <%}%>
+    <%} else {%>
+        <p>Không có kết quả</p>
+        <%}%>
+            </div>
+        </div>
